@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CipherShield - Secure Encryption Platform</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="background">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div class="logo">
+            <span class="logo-icon">🔐</span>
+            <h1>CipherShield</h1>
+          </div>
+          <p class="tagline">Secure AES-256 Encryption Platform</p>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Control Panel -->
+        <section class="control-panel">
+          <div class="control-buttons">
+            <button id="generateKeyBtn" class="btn btn-primary">
+              Generate New Key
+            </button>
+            <button id="clearAllBtn" class="btn btn-secondary">
+              Clear All
+            </button>
+          </div>
+          <div class="key-display">
+            <label>Current AES-256 Key:</label>
+            <div class="key-box">
+              <code id="keyDisplay">Click "Generate New Key" to start</code>
+              <button id="copyKeyBtn" class="btn-copy" title="Copy key">
+                📋
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Main Grid -->
+        <div class="grid">
+          <!-- Input Section -->
+          <section class="panel input-panel">
+            <h2 class="panel-title">
+              <span class="icon">📝</span> Plain Text Input
+            </h2>
+            <textarea
+              id="plaintextInput"
+              class="input-area"
+              placeholder="Enter your message here..."
+              rows="8"
+            ></textarea>
+            <div class="action-buttons">
+              <button id="encryptBtn" class="btn btn-encrypt">
+                🔒 Encrypt
+              </button>
+            </div>
+          </section>
+
+          <!-- Encrypted Section -->
+          <section class="panel encrypted-panel">
+            <h2 class="panel-title">
+              <span class="icon">🔐</span> Encrypted Output
+            </h2>
+            <div class="output-group">
+              <label>Nonce:</label>
+              <div class="output-box">
+                <code id="nonceDisplay">-</code>
+                <button class="btn-copy" onclick="copyToClipboard('nonceDisplay')" title="Copy">
+                  📋
+                </button>
+              </div>
+            </div>
+            <div class="output-group">
+              <label>Ciphertext:</label>
+              <div class="output-box">
+                <code id="ciphertextDisplay">-</code>
+                <button
+                  class="btn-copy"
+                  onclick="copyToClipboard('ciphertextDisplay')"
+                  title="Copy"
+                >
+                  📋
+                </button>
+              </div>
+            </div>
+            <div class="output-group">
+              <label>Authentication Tag:</label>
+              <div class="output-box">
+                <code id="tagDisplay">-</code>
+                <button class="btn-copy" onclick="copyToClipboard('tagDisplay')" title="Copy">
+                  📋
+                </button>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <button id="decryptBtn" class="btn btn-decrypt">
+                🔓 Decrypt
+              </button>
+            </div>
+          </section>
+
+          <!-- Decrypted Section -->
+          <section class="panel decrypted-panel">
+            <h2 class="panel-title">
+              <span class="icon">✅</span> Decrypted Output
+            </h2>
+            <textarea
+              id="decryptedOutput"
+              class="output-area"
+              placeholder="Decrypted message will appear here..."
+              rows="8"
+              readonly
+            ></textarea>
+            <div class="action-buttons">
+              <button id="verifyBtn" class="btn btn-verify">
+                ✓ Verify Match
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- Status Section -->
+        <section class="status-panel">
+          <h3>Status</h3>
+          <div id="statusMessage" class="status-message">Ready</div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>
+          CipherShield v2.0 | AES-256-GCM Encryption | IS Lab Project 2026
+        </p>
+      </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification"></div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
