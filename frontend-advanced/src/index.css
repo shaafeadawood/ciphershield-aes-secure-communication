@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply transition-colors duration-300;
+  }
+
+  body {
+    @apply bg-gray-950 text-white;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+  }
+
+  @font-face {
+    font-family: 'Fira Code';
+    src: url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap');
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply backdrop-blur-md bg-white/5 border border-white/10 rounded-xl;
+  }
+
+  .neon-border {
+    @apply border border-neon-cyan/50 shadow-neon;
+  }
+
+  .glow-text {
+    @apply text-neon-cyan drop-shadow-lg;
+  }
+
+  .scan-line {
+    @apply absolute inset-0 pointer-events-none;
+    background: linear-gradient(0deg, transparent 0%, rgba(0, 217, 255, 0.03) 50%, transparent 100%);
+    animation: scan 3s linear infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
