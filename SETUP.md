@@ -170,19 +170,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.11
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
 
-    - name: Install dependencies
-      run: |
-        pip install -r backend/requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements.txt
 
-    - name: Run tests
-      run: |
-        pytest backend/tests/
+      - name: Run tests
+        run: |
+          pytest backend/tests/
 ```
 
 ## Troubleshooting

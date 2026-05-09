@@ -21,17 +21,20 @@ A modern, professional web-based secure communication system for encrypting and 
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **HTML5** - Semantic markup
 - **CSS3** - Modern glassmorphism and gradient styling
 - **JavaScript (Vanilla)** - Interactive UI with async/await API calls
 
 ### Backend
+
 - **FastAPI** (Python) - Modern, fast async web framework
 - **Pydantic** - Data validation and serialization
 - **Pycryptodome** - Industry-standard cryptography library
 - **Uvicorn** - ASGI server
 
 ### Encryption
+
 - **AES-256-GCM** (Advanced Encryption Standard)
   - 256-bit key size (maximum security)
   - Galois/Counter Mode for authenticated encryption
@@ -64,6 +67,7 @@ CipherShield/
 ## ⚡ Quick Start
 
 ### Prerequisites
+
 - Python 3.8+
 - pip (Python package manager)
 - A modern web browser
@@ -71,21 +75,25 @@ CipherShield/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/shaafeadawood/ciphershield-aes-secure-communication.git
    cd CipherShield
    ```
 
 2. **Install backend dependencies**
+
    ```bash
    cd backend
    pip install -r requirements.txt
    ```
 
 3. **Run the backend server**
+
    ```bash
    python app.py
    ```
+
    The API will be available at `http://localhost:8000`
 
 4. **Open the frontend**
@@ -121,12 +129,14 @@ CipherShield/
 ### API Endpoints
 
 #### Generate Key
+
 ```bash
 POST /api/cipher/generate-key
 Response: { "key": "base64_encoded_key" }
 ```
 
 #### Encrypt Message
+
 ```bash
 POST /api/cipher/encrypt
 Body: {
@@ -141,6 +151,7 @@ Response: {
 ```
 
 #### Decrypt Message
+
 ```bash
 POST /api/cipher/decrypt
 Body: {
@@ -165,13 +176,13 @@ Response: { "plaintext": "Decrypted message" }
 
 ### AES-256-GCM Mode
 
-| Parameter | Value |
-|-----------|-------|
-| **Algorithm** | AES (Rijndael) |
-| **Key Size** | 256 bits (32 bytes) |
-| **Mode** | GCM (Galois/Counter Mode) |
-| **Authentication** | GMAC (128-bit tag) |
-| **Nonce Size** | 96 bits (12 bytes) |
+| Parameter          | Value                     |
+| ------------------ | ------------------------- |
+| **Algorithm**      | AES (Rijndael)            |
+| **Key Size**       | 256 bits (32 bytes)       |
+| **Mode**           | GCM (Galois/Counter Mode) |
+| **Authentication** | GMAC (128-bit tag)        |
+| **Nonce Size**     | 96 bits (12 bytes)        |
 
 ### Why AES-256-GCM?
 
@@ -206,21 +217,22 @@ The frontend uses vanilla JavaScript with clean API integration:
 
 ```javascript
 // Generate key
-const response = await fetch('http://localhost:8000/api/cipher/generate-key', 
-  { method: 'POST' });
+const response = await fetch("http://localhost:8000/api/cipher/generate-key", {
+  method: "POST",
+});
 const data = await response.json();
 
 // Encrypt
-const response = await fetch('http://localhost:8000/api/cipher/encrypt',
-  {
-    method: 'POST',
-    body: JSON.stringify({ plaintext, key })
-  });
+const response = await fetch("http://localhost:8000/api/cipher/encrypt", {
+  method: "POST",
+  body: JSON.stringify({ plaintext, key }),
+});
 ```
 
 ## 📦 Dependencies
 
 ### Backend (`requirements.txt`)
+
 ```
 fastapi>=0.104.0
 uvicorn>=0.24.0
@@ -230,18 +242,21 @@ python-dotenv>=1.0.0
 ```
 
 ### Frontend
+
 - No external dependencies (vanilla JavaScript)
 - Modern browser required
 
 ## 🚢 Deployment
 
 ### Development
+
 ```bash
 cd backend
 python app.py
 ```
 
 ### Production
+
 ```bash
 cd backend
 pip install -r requirements.txt
@@ -273,15 +288,18 @@ git commit -m "Add comprehensive README and documentation"
 ## 🐛 Troubleshooting
 
 ### Backend won't start
+
 - Ensure Python 3.8+ is installed
 - Check that port 8000 is not in use
 - Verify all dependencies: `pip install -r requirements.txt`
 
 ### CORS errors
+
 - Frontend and backend must be on same origin for local development
 - Ensure backend is running on `http://localhost:8000`
 
 ### Encryption/Decryption errors
+
 - Verify key format is Base64-encoded
 - Ensure all encryption components (nonce, tag, ciphertext) are present
 - Check that UTF-8 encoding is used for text
@@ -289,6 +307,7 @@ git commit -m "Add comprehensive README and documentation"
 ## 🎓 Educational Value
 
 This project demonstrates:
+
 - Modern web application architecture
 - Cryptographic implementation best practices
 - RESTful API design
@@ -304,6 +323,7 @@ MIT License - See LICENSE file for details
 ## 👤 Author
 
 **Shaafea Dawood**
+
 - GitHub: [@shaafeadawood](https://github.com/shaafeadawood)
 - Project: [CipherShield AES Secure Communication](https://github.com/shaafeadawood/ciphershield-aes-secure-communication)
 
