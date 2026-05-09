@@ -3,151 +3,242 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CipherShield - Secure Encryption Platform</title>
+    <title>CipherShield - Professional AES Encryption Dashboard</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div class="background">
-      <div class="gradient-orb orb-1"></div>
-      <div class="gradient-orb orb-2"></div>
-      <div class="gradient-orb orb-3"></div>
+    <!-- Animated Background -->
+    <div class="scene">
+      <div class="animated-gradient"></div>
+      <div class="floating-orb orb-1"></div>
+      <div class="floating-orb orb-2"></div>
+      <div class="floating-orb orb-3"></div>
     </div>
 
-    <div class="container">
+    <!-- Main Container -->
+    <div class="main-container">
       <!-- Header -->
-      <header class="header">
-        <div class="header-content">
-          <div class="logo">
-            <span class="logo-icon">🔐</span>
-            <h1>CipherShield</h1>
+      <header class="dashboard-header">
+        <div class="header-wrapper">
+          <div class="header-branding">
+            <div class="logo-badge">🔐</div>
+            <div class="header-text">
+              <h1 class="app-title">CipherShield</h1>
+              <p class="app-subtitle">Enterprise-Grade AES-256 Encryption</p>
+            </div>
           </div>
-          <p class="tagline">Secure AES-256 Encryption Platform</p>
+          <div class="header-status">
+            <span class="status-indicator"></span>
+            <span class="status-text">System Ready</span>
+          </div>
         </div>
       </header>
 
-      <!-- Main Content -->
-      <main class="main-content">
-        <!-- Control Panel -->
-        <section class="control-panel">
-          <div class="control-buttons">
-            <button id="generateKeyBtn" class="btn btn-primary">
-              Generate New Key
+      <!-- Dashboard -->
+      <div class="dashboard">
+        <!-- Key Management Panel -->
+        <div class="key-management-section">
+          <div class="section-header">
+            <h2 class="section-title">🔑 Key Management</h2>
+            <p class="section-subtitle">Generate and manage AES-256 encryption keys</p>
+          </div>
+
+          <div class="key-controls">
+            <button id="generateKeyBtn" class="btn btn-primary btn-lg">
+              <span class="btn-icon">✨</span>
+              <span class="btn-text">Generate New Key</span>
             </button>
-            <button id="clearAllBtn" class="btn btn-secondary">
-              Clear All
+            <button id="clearAllBtn" class="btn btn-secondary btn-lg">
+              <span class="btn-icon">🔄</span>
+              <span class="btn-text">Reset All</span>
             </button>
           </div>
-          <div class="key-display">
-            <label>Current AES-256 Key:</label>
+
+          <div class="key-display-container">
+            <div class="key-display-label">Active AES-256 Key</div>
             <div class="key-box">
-              <code id="keyDisplay">Click "Generate New Key" to start</code>
-              <button id="copyKeyBtn" class="btn-copy" title="Copy key">
-                📋
+              <code id="keyDisplay" class="key-content">Waiting for key generation...</code>
+              <button id="copyKeyBtn" class="key-copy-btn" title="Copy to clipboard">
+                <span>📋</span>
               </button>
             </div>
           </div>
-        </section>
-
-        <!-- Main Grid -->
-        <div class="grid">
-          <!-- Input Section -->
-          <section class="panel input-panel">
-            <h2 class="panel-title">
-              <span class="icon">📝</span> Plain Text Input
-            </h2>
-            <textarea
-              id="plaintextInput"
-              class="input-area"
-              placeholder="Enter your message here..."
-              rows="8"
-            ></textarea>
-            <div class="action-buttons">
-              <button id="encryptBtn" class="btn btn-encrypt">
-                🔒 Encrypt
-              </button>
-            </div>
-          </section>
-
-          <!-- Encrypted Section -->
-          <section class="panel encrypted-panel">
-            <h2 class="panel-title">
-              <span class="icon">🔐</span> Encrypted Output
-            </h2>
-            <div class="output-group">
-              <label>Nonce:</label>
-              <div class="output-box">
-                <code id="nonceDisplay">-</code>
-                <button class="btn-copy" onclick="copyToClipboard('nonceDisplay')" title="Copy">
-                  📋
-                </button>
-              </div>
-            </div>
-            <div class="output-group">
-              <label>Ciphertext:</label>
-              <div class="output-box">
-                <code id="ciphertextDisplay">-</code>
-                <button
-                  class="btn-copy"
-                  onclick="copyToClipboard('ciphertextDisplay')"
-                  title="Copy"
-                >
-                  📋
-                </button>
-              </div>
-            </div>
-            <div class="output-group">
-              <label>Authentication Tag:</label>
-              <div class="output-box">
-                <code id="tagDisplay">-</code>
-                <button class="btn-copy" onclick="copyToClipboard('tagDisplay')" title="Copy">
-                  📋
-                </button>
-              </div>
-            </div>
-            <div class="action-buttons">
-              <button id="decryptBtn" class="btn btn-decrypt">
-                🔓 Decrypt
-              </button>
-            </div>
-          </section>
-
-          <!-- Decrypted Section -->
-          <section class="panel decrypted-panel">
-            <h2 class="panel-title">
-              <span class="icon">✅</span> Decrypted Output
-            </h2>
-            <textarea
-              id="decryptedOutput"
-              class="output-area"
-              placeholder="Decrypted message will appear here..."
-              rows="8"
-              readonly
-            ></textarea>
-            <div class="action-buttons">
-              <button id="verifyBtn" class="btn btn-verify">
-                ✓ Verify Match
-              </button>
-            </div>
-          </section>
         </div>
 
-        <!-- Status Section -->
-        <section class="status-panel">
-          <h3>Status</h3>
-          <div id="statusMessage" class="status-message">Ready</div>
-        </section>
-      </main>
+        <!-- Encryption Workspace -->
+        <div class="encryption-workspace">
+          <!-- Input Card -->
+          <div class="workspace-card input-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <span class="card-icon">📝</span>
+                <span>Plain Text</span>
+              </h3>
+              <div class="card-badge">Input</div>
+            </div>
+
+            <div class="card-body">
+              <textarea
+                id="plaintextInput"
+                class="cipher-input"
+                placeholder="Enter your message here. Supports up to 10,000 characters..."
+                spellcheck="false"
+              ></textarea>
+              <div class="input-footer">
+                <span class="char-counter">
+                  <span id="charCount">0</span> / 10,000 characters
+                </span>
+              </div>
+            </div>
+
+            <div class="card-actions">
+              <button id="encryptBtn" class="btn btn-encrypt btn-action">
+                <span class="btn-anim">🔒</span>
+                <span class="btn-text">Encrypt Message</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Output Cards Container -->
+          <div class="output-container">
+            <!-- Encrypted Output Card -->
+            <div class="workspace-card output-card encrypted-card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <span class="card-icon">🔐</span>
+                  <span>Encrypted Data</span>
+                </h3>
+                <div class="card-badge encrypted">Output</div>
+              </div>
+
+              <div class="card-body">
+                <div class="output-section">
+                  <label class="output-label">Nonce (Initialization Vector)</label>
+                  <div class="output-display">
+                    <code id="nonceDisplay" class="output-text">-</code>
+                    <button class="copy-btn" onclick="copyToClipboard('nonceDisplay')" title="Copy">
+                      📋
+                    </button>
+                  </div>
+                </div>
+
+                <div class="output-section">
+                  <label class="output-label">Ciphertext (Encrypted Message)</label>
+                  <div class="output-display large">
+                    <code id="ciphertextDisplay" class="output-text">-</code>
+                    <button class="copy-btn" onclick="copyToClipboard('ciphertextDisplay')" title="Copy">
+                      📋
+                    </button>
+                  </div>
+                </div>
+
+                <div class="output-section">
+                  <label class="output-label">Authentication Tag (GMAC)</label>
+                  <div class="output-display">
+                    <code id="tagDisplay" class="output-text">-</code>
+                    <button class="copy-btn" onclick="copyToClipboard('tagDisplay')" title="Copy">
+                      📋
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-actions">
+                <button id="decryptBtn" class="btn btn-decrypt btn-action">
+                  <span class="btn-anim">🔓</span>
+                  <span class="btn-text">Decrypt Message</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Decrypted Output Card -->
+            <div class="workspace-card output-card decrypted-card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <span class="card-icon">✅</span>
+                  <span>Decrypted Result</span>
+                </h3>
+                <div class="card-badge success">Verified</div>
+              </div>
+
+              <div class="card-body">
+                <textarea
+                  id="decryptedOutput"
+                  class="cipher-output"
+                  placeholder="Decrypted message will appear here..."
+                  readonly
+                  spellcheck="false"
+                ></textarea>
+              </div>
+
+              <div class="card-actions">
+                <button id="verifyBtn" class="btn btn-verify btn-action">
+                  <span class="btn-anim">✓</span>
+                  <span class="btn-text">Verify Authenticity</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status & Information Panel -->
+        <div class="info-panel">
+          <div class="status-display">
+            <div class="status-header">
+              <span class="status-title">System Status</span>
+              <span class="status-pulse"></span>
+            </div>
+            <div id="statusMessage" class="status-content">Initialized and ready for encryption</div>
+          </div>
+
+          <div class="encryption-info">
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Algorithm</span>
+                <span class="info-value">AES-256-GCM</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Key Size</span>
+                <span class="info-value">256 bits</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Mode</span>
+                <span class="info-value">GCM (AEAD)</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Auth Tag</span>
+                <span class="info-value">128 bits</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Footer -->
-      <footer class="footer">
-        <p>
-          CipherShield v2.0 | AES-256-GCM Encryption | IS Lab Project 2026
-        </p>
+      <footer class="dashboard-footer">
+        <div class="footer-content">
+          <p class="footer-text">
+            CipherShield v2.0 | AES-256-GCM | Information Security Lab
+          </p>
+          <div class="footer-links">
+            <a href="https://github.com/shaafeadawood/ciphershield-aes-secure-communication" target="_blank" class="footer-link">
+              GitHub Repository
+            </a>
+          </div>
+        </div>
       </footer>
     </div>
 
     <!-- Notification Toast -->
-    <div id="notification" class="notification"></div>
+    <div id="notification" class="notification-toast"></div>
+
+    <!-- Loading Animation (hidden by default) -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p id="loadingText">Processing...</p>
+      </div>
+    </div>
 
     <script src="js/app.js"></script>
   </body>

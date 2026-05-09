@@ -20,6 +20,7 @@ const plaintextInput = document.getElementById("plaintextInput");
 const decryptedOutput = document.getElementById("decryptedOutput");
 const statusMessage = document.getElementById("statusMessage");
 const notification = document.getElementById("notification");
+const charCounter = document.getElementById("charCount");
 
 // Event Listeners
 generateKeyBtn.addEventListener("click", generateKey);
@@ -28,13 +29,13 @@ copyKeyBtn.addEventListener("click", () => copyToClipboard("keyDisplay"));
 encryptBtn.addEventListener("click", encryptMessage);
 decryptBtn.addEventListener("click", decryptMessage);
 verifyBtn.addEventListener("click", verifyMatch);
-
+plaintextInput.addEventListener("input", updateCharCounter);
 /**
  * Display status message with styling
  */
 function updateStatus(message, type = "info") {
   statusMessage.textContent = message;
-  statusMessage.className = `status-message ${type}`;
+  statusMessage.className = `status-content`;
 }
 
 /**
@@ -42,10 +43,18 @@ function updateStatus(message, type = "info") {
  */
 function showNotification(message, type = "success") {
   notification.textContent = message;
-  notification.className = `notification ${type} show`;
+  notification.className = `notification-toast ${type} show`;
   setTimeout(() => {
     notification.classList.remove("show");
   }, 3000);
+}
+
+/**
+ * Update character counter
+ */
+function updateCharCounter() {
+  const count = plaintextInput.value.length;
+  charCounter.textContent = Math.min(count, 10000);
 }
 
 /**
