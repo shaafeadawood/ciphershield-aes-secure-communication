@@ -3,7 +3,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from ..crypto import AESCipher
+from crypto import AESCipher
 
 router = APIRouter(prefix="/api/cipher", tags=["cipher"])
 
@@ -99,7 +99,7 @@ def decrypt_message(request: DecryptRequest):
         HTTPException: If decryption fails or authentication fails.
     """
     try:
-        from ..crypto.aes_encryption import EncryptedPayload
+        from crypto.aes_encryption import EncryptedPayload
 
         payload = EncryptedPayload(
             nonce=request.nonce, tag=request.tag, ciphertext=request.ciphertext
