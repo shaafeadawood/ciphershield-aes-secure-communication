@@ -17,10 +17,10 @@ app = FastAPI(
     version="2.0.0",
 )
 
-# Include routers
+# Include routers (API routes take precedence)
 app.include_router(cipher_router)
 
-# Mount static files (frontend)
+# Mount static files (frontend) at /static
 frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend")
 if os.path.exists(frontend_path):
     app.mount("/static", StaticFiles(directory=frontend_path), name="static")
