@@ -1,0 +1,43 @@
+/**
+ * Premium Card Component Styles
+ * Glassmorphic, elegant, premium appearance
+ */
+
+.premium-card {
+  position: relative;
+  background: rgba(15, 15, 23, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 217, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  transition: all var(--duration-normal) var(--ease-smooth);
+  overflow: hidden;
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.premium-card.with-glow {
+  box-shadow: 0 0 16px rgba(0, 217, 255, 0.1);
+}
+
+.premium-card.with-glow:hover {
+  box-shadow: 0 0 24px rgba(0, 217, 255, 0.2), 0 0 32px rgba(0, 217, 255, 0.1);
+}
+
+.premium-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .premium-card {
+    padding: 1.5rem;
+  }
+}
