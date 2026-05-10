@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Lock, Unlock, History, Shield, Info, Menu, X } from 'lucide-react';
-import { useCipherStore } from '../store/cipherStore';
+import { Lock, Unlock, History, Shield, Info } from 'lucide-react';
+import { useCipherStore } from '../../store/cipherStore';
 
 interface NavItem {
   id: 'encrypt' | 'decrypt' | 'history' | 'simulation' | 'about';

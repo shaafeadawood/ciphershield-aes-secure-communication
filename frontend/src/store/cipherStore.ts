@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { CipherTab, HistoryItem, LogEntry } from '../types/cipher';
 
 export interface EncryptionState {
   plaintext: string;
@@ -6,9 +7,9 @@ export interface EncryptionState {
   decrypted: string;
   encryptionKey: string;
   loading: boolean;
-  currentTab: 'encrypt' | 'decrypt' | 'history' | 'simulation' | 'about';
-  history: Array<{ id: string; plaintext: string; ciphertext: string; timestamp: string }>;
-  logs: Array<{ timestamp: string; message: string; type: 'info' | 'success' | 'error' }>;
+  currentTab: CipherTab;
+  history: HistoryItem[];
+  logs: LogEntry[];
 
   setPlaintext: (text: string) => void;
   setCiphertext: (text: string) => void;
@@ -18,7 +19,7 @@ export interface EncryptionState {
   setCurrentTab: (tab: EncryptionState['currentTab']) => void;
   addHistory: (item: EncryptionState['history'][0]) => void;
   clearHistory: () => void;
-  addLog: (message: string, type: 'info' | 'success' | 'error') => void;
+  addLog: (message: string, type: LogEntry['type']) => void;
   clearLogs: () => void;
 }
 

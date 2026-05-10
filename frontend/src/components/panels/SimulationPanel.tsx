@@ -6,7 +6,6 @@ import { useCipherStore } from '../../store/cipherStore';
 export const SimulationPanel: React.FC = () => {
   const { history, loading, setLoading, addLog } = useCipherStore();
   const [attackData, setAttackData] = useState<any>(null);
-  const [showDetails, setShowDetails] = useState(false);
 
   const handleSimulateAttack = async () => {
     if (history.length === 0) {
@@ -38,7 +37,6 @@ export const SimulationPanel: React.FC = () => {
     };
 
     setAttackData(simulatedAttack);
-    setShowDetails(true);
     addLog('Network packet intercepted successfully', 'info');
     addLog('WARNING: Intercepted data is UNREADABLE without encryption key', 'error');
     setLoading(false);

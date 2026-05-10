@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Copy, Unlock } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
-import { cipherApi } from '../../api/cipherApi';
+import { cipherApi } from '../../services/api';
 
 export const DecryptPanel: React.FC = () => {
   const {

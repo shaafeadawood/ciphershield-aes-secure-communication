@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Trash2 } from 'lucide-react';
-import { useCipherStore } from '../store/cipherStore';
+import { useCipherStore } from '../../store/cipherStore';
 
 export const SystemLogs: React.FC = () => {
   const { logs, clearLogs } = useCipherStore();

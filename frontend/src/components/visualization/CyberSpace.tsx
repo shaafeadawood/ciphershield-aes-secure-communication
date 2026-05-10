@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Preload } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -10,7 +10,6 @@ interface DataNodeProps {
 
 const DataNodes: React.FC<DataNodeProps> = ({ count = 5000, speed = 0.5 }) => {
   const ref = useRef<THREE.Points>(null);
-  const { size } = useThree();
 
   useEffect(() => {
     const positions = new Float32Array(count * 3);

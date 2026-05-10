@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { DecryptResponse, EncryptResponse, KeyResponse } from '../types/cipher';
 
 const API_BASE = '/api/cipher';
 
@@ -8,20 +9,6 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-export interface EncryptResponse {
-  ciphertext: string;
-  nonce: string;
-  tag: string;
-}
-
-export interface DecryptResponse {
-  plaintext: string;
-}
-
-export interface KeyResponse {
-  key: string;
-}
 
 export const cipherApi = {
   generateKey: async (): Promise<KeyResponse> => {

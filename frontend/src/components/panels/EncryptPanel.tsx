@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Copy, RefreshCw, Lock, Key } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
-import { cipherApi } from '../../api/cipherApi';
+import { cipherApi } from '../../services/api';
 
 export const EncryptPanel: React.FC = () => {
   const {
@@ -16,12 +16,6 @@ export const EncryptPanel: React.FC = () => {
     addHistory,
     addLog,
   } = useCipherStore();
-
-  const [lastEncryption, setLastEncryption] = useState<{
-    nonce: string;
-    tag: string;
-    ciphertext: string;
-  } | null>(null);
 
   const handleGenerateKey = async () => {
     setLoading(true);
@@ -52,11 +46,6 @@ export const EncryptPanel: React.FC = () => {
     try {
       const response = await cipherApi.encrypt(plaintext, encryptionKey);
       setCiphertext(response.ciphertext);
-      setLastEncryption({
-        nonce: response.nonce,
-        tag: response.tag,
-        ciphertext: response.ciphertext,
-      });
       addHistory({
         id: Date.now().toString(),
         plaintext,

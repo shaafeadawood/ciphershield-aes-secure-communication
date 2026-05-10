@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useCipherStore } from './store/cipherStore';
-import { Sidebar } from './components/Sidebar';
-import { CyberSpace } from './components/3D/CyberSpace';
+import { Sidebar } from './components/ui/Sidebar';
+import { CyberSpace } from './components/visualization/CyberSpace';
 import { EncryptPanel } from './components/panels/EncryptPanel';
 import { DecryptPanel } from './components/panels/DecryptPanel';
 import { HistoryPanel } from './components/panels/HistoryPanel';
 import { SimulationPanel } from './components/panels/SimulationPanel';
 import { AboutPanel } from './components/panels/AboutPanel';
-import { SystemLogs } from './components/SystemLogs';
-import './index.css';
+import { SystemLogs } from './components/ui/SystemLogs';
+import './styles/index.css';
 
 function App() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
