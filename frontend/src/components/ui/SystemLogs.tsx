@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Trash2 } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
@@ -6,6 +6,9 @@ import { useCipherStore } from '../../store/cipherStore';
 export const SystemLogs: React.FC = () => {
   const { logs, clearLogs } = useCipherStore();
   const [typedMessage, setTypedMessage] = useState('');
+  const logContainerRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const isPinnedRef = useRef(true);
 
   useEffect(() => {
     const latestLog = logs[0]?.message ?? '';
@@ -27,6 +30,12 @@ export const SystemLogs: React.FC = () => {
 
     return () => window.clearInterval(timer);
   }, [logs]);
+
+  useEffect(() => {
+    if (isPinnedRef.current) {
+      bottomRef.current?.scrollIntoView({ block: 'end' });
+    }
+  }, [logs, typedMessage]);
 
   const getLogColor = (type: 'info' | 'success' | 'error') => {
     switch (type) {
@@ -60,10 +69,12 @@ export const SystemLogs: React.FC = () => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      {/* Header */}
       <div className="flex items-center justify-between mb-3 pb-3 border-b border-neon-cyan/20">
         <h3 className="text-sm font-bold text-neon-cyan/80 flex items-center gap-2 uppercase tracking-wider">
           <Terminal size={16} /> System Terminal
+          <span className="px-2 py-0.5 rounded-full text-[10px] bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20">
+            {logs.length}
+          </span>
         </h3>
         {logs.length > 0 && (
           <button
@@ -76,8 +87,16 @@ export const SystemLogs: React.FC = () => {
         )}
       </div>
 
-      {/* Logs Container */}
-      <div className="flex-1 overflow-y-auto font-mono text-xs space-y-1 bg-black/30 rounded p-3 border border-neon-cyan/10">
+      <div
+        ref={logContainerRef}
+        onScroll={() => {
+          const container = logContainerRef.current;
+          if (!container) return;
+          const distanceFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+          isPinnedRef.current = distanceFromBottom < 40;
+        }}
+        className="flex-1 overflow-y-auto font-mono text-xs space-y-1 bg-black/30 rounded p-3 border border-neon-cyan/10"
+      >
         <AnimatePresence mode="popLayout">
           {logs.length === 0 ? (
             <motion.div
@@ -91,58 +110,70 @@ export const SystemLogs: React.FC = () => {
             </motion.div>
           ) : (
             logs.map((log, idx) => {
-              // Split full message on first space to extract prefix token (e.g. "[SYS]")
               const full = log.message || '';
               const firstSpace = full.indexOf(' ');
               const prefix = firstSpace > -1 ? full.slice(0, firstSpace) : '';
 
-              // For the animated latest message (idx === 0) we color only the prefix portion
               if (idx === 0) {
-                const typed = typedMessage;
                 const prefixLen = prefix ? prefix.length : 0;
-                const left = typed.slice(0, Math.min(typed.length, prefixLen));
-                const right = typed.length > prefixLen ? typed.slice(prefixLen) : '';
+                const typed = typedMessage;
+                const typedPrefix = typed.slice(0, Math.min(typed.length, prefixLen));
+                const typedRest = typed.length > prefixLen ? typed.slice(prefixLen) : '';
+                const prefixTone = prefixColor(prefix);
 
                 return (
                   <motion.div
-                    key={idx}
+                    key={`${log.timestamp}-${idx}`}
                     className={`flex gap-2 items-start ${getLogColor(log.type)} border-l-2 pl-2`}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
                   >
                     <span className="text-neon-cyan/50 flex-shrink-0">[{log.timestamp}]</span>
-                    <span className="break-all">
-                      {prefixLen > 0 ? (
-                        <>
-                          <span style={{ color: prefixColor(prefix) }}>{left}</span>
-                          <span>{right}</span>
-                        </>
-                      ) : (
-                        <>{typed}</>
-                      )}
+                    <span className="break-all inline-flex items-start gap-2">
+                      {prefixLen > 0 && prefixTone ? (
+                        <span
+                          className="px-1.5 py-0.5 rounded-full border text-[10px] tracking-[0.2em] uppercase"
+                          style={{
+                            color: prefixTone,
+                            borderColor: `${prefixTone}33`,
+                            background: `${prefixTone}10`,
+                          }}
+                        >
+                          {typedPrefix}
+                        </span>
+                      ) : null}
+                      <span>{prefixLen > 0 && prefixTone ? (typed.length > prefixLen ? typedRest : typed.slice(prefixLen)) : typed}</span>
                       <span className="terminal-cursor" />
                     </span>
                   </motion.div>
                 );
               }
 
-              // For non-animated entries, render the full message but color only the prefix token
               const rest = firstSpace > -1 ? full.slice(firstSpace) : '';
 
               return (
                 <motion.div
-                  key={idx}
+                  key={`${log.timestamp}-${idx}`}
                   className={`flex gap-2 items-start ${getLogColor(log.type)} border-l-2 pl-2`}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 10 }}
                 >
                   <span className="text-neon-cyan/50 flex-shrink-0">[{log.timestamp}]</span>
-                  <span className="break-all">
-                    {prefix ? (
+                  <span className="break-all inline-flex items-start gap-2">
+                    {prefix && prefixColor(prefix) ? (
                       <>
-                        <span style={{ color: prefixColor(prefix) }}>{prefix}</span>
+                        <span
+                          className="px-1.5 py-0.5 rounded-full border text-[10px] tracking-[0.2em] uppercase"
+                          style={{
+                            color: prefixColor(prefix),
+                            borderColor: `${prefixColor(prefix)}33`,
+                            background: `${prefixColor(prefix)}10`,
+                          }}
+                        >
+                          {prefix}
+                        </span>
                         <span>{rest}</span>
                       </>
                     ) : (
@@ -153,6 +184,7 @@ export const SystemLogs: React.FC = () => {
               );
             })
           )}
+          <div ref={bottomRef} />
         </AnimatePresence>
       </div>
 

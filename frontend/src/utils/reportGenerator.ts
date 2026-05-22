@@ -151,7 +151,7 @@ export function generateReport(history: EncryptionHistoryEntry[]): string {
   <div class="container">
     <div class="header">
       <div class="h-left">
-        <div class="brand">CIPHERSHIELD</div>
+        <div class="brand">CipherShield</div>
         <div class="title">Cipher Intelligence Report</div>
         <div class="subtitle">Session Audit — AES-256-GCM Encryption Analysis</div>
       </div>
@@ -204,7 +204,7 @@ export function generateReport(history: EncryptionHistoryEntry[]): string {
     </div>
 
     <div class="footer">
-      <div style="font-family:monospace;color:#22d3ee;letter-spacing:0.3em">CIPHERSHIELD</div>
+      <div style="font-family:monospace;color:#22d3ee;letter-spacing:0.3em">CipherShield</div>
       <div style="max-width:420px;text-align:right;color:#334155;line-height:1.6">This report is generated for educational and demonstration purposes only. CipherShield does not store or transmit session data beyond the current browser session. All cryptographic operations are performed locally.</div>
     </div>
     <div class="footer-bottom">AES-256-GCM · NIST SP 800-38D · Educational Demo · Not for Production Use</div>

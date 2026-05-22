@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import axios from 'axios';
+import React, { useCallback, useState } from 'react';
 import { transmissionBus } from '../../utils/transmissionBus';
 import type { TransmissionPacket } from '../../types/transmission.types';
 import { useCipherStore } from '../../store/cipherStore';
@@ -7,8 +6,8 @@ import { SenderPanel } from './SenderPanel';
 import { ChannelView } from './ChannelView';
 import { ReceiverPanel } from './ReceiverPanel';
 import '../../styles/sections/encryption-experience.css';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldAlert } from 'lucide-react';
+import { encryptMessage, generateKey } from '../../services/cipherService';
 
 export const SecureTransmissionSection: React.FC = () => {
   const addLog = useCipherStore((s) => s.addLog);
@@ -19,6 +18,7 @@ export const SecureTransmissionSection: React.FC = () => {
   const [senderText, setSenderText] = useState<string>('');
   const [decryptedOutput, setDecryptedOutput] = useState<string>('');
   const [interceptedPayload, setInterceptedPayload] = useState<string>('');
+  const [sessionKey, setSessionKey] = useState<string>('');
 
   const scramble = useCallback((ciphertext: string) => {
     const glyphs = '█▓▒░▄▀■□▪▫◆◇○●0123456789ABCDEF';
@@ -30,13 +30,14 @@ export const SecureTransmissionSection: React.FC = () => {
   const handleTransmit = useCallback(async (plaintext: string) => {
     setSenderText(plaintext);
     setTransmissionStatus('sending');
+    setInterceptedPayload('');
+    setDecryptedOutput('');
 
     try {
-      const keyResp = await axios.post('/api/cipher/generate-key');
-      const key = keyResp.data?.key ?? '';
+      const { key } = await generateKey();
+      setSessionKey(key);
 
-      const encResp = await axios.post('/api/cipher/encrypt', { plaintext, key });
-      const ciphertext: string = encResp.data?.ciphertext ?? '';
+      const { ciphertext } = await encryptMessage(plaintext, key);
       const size = ciphertext.length;
       const packet: TransmissionPacket = {
         id: Date.now().toString(16).slice(-4).toUpperCase(),
@@ -81,7 +82,7 @@ export const SecureTransmissionSection: React.FC = () => {
   const simulateToggle = useCallback(() => setInterceptMode((s) => !s), []);
 
   return (
-    <section className="control-center-section">
+    <section id="transmission-demo" className="control-center-section">
       <div className="container control-center-shell">
         <div className="text-center mb-8">
           <div className="font-mono text-xs uppercase text-neon-cyan/40 tracking-wider">SECURE CHANNEL PROTOCOL</div>
@@ -94,7 +95,7 @@ export const SecureTransmissionSection: React.FC = () => {
         </div>
 
         <div className="grid" style={{ gridTemplateColumns: '1fr 2fr 1fr', gap: 24, alignItems: 'stretch' }}>
-          <SenderPanel onTransmit={handleTransmit} transmissionStatus={transmissionStatus} sessionKey={''} />
+          <SenderPanel onTransmit={handleTransmit} transmissionStatus={transmissionStatus} sessionKey={sessionKey} />
           <ChannelView packet={currentPacket} interceptMode={interceptMode} onDelivered={handleDelivered} onIntercepted={() => {
             // choose random attack
             const attacks: Array<'MITM_ATTEMPT' | 'REPLAY_ATTACK' | 'KEY_PROBE'> = ['MITM_ATTEMPT', 'REPLAY_ATTACK', 'KEY_PROBE'];

@@ -39,6 +39,7 @@ export interface EncryptionState {
   currentTab: CipherTab;
   history: HistoryItem[];
   logs: LogEntry[];
+  decryptTarget: HistoryItem | null;
 
   setPlaintext: (text: string) => void;
   setCiphertext: (text: string) => void;
@@ -52,6 +53,7 @@ export interface EncryptionState {
   clearHistory: () => void;
   addLog: (message: string, type: LogEntry['type']) => void;
   clearLogs: () => void;
+  setDecryptTarget: (item: HistoryItem | null) => void;
   resetSession: () => void;
 }
 
@@ -70,6 +72,7 @@ export const useCipherStore = create<EncryptionState>((set) => ({
   logs: sessionState?.logs ?? [
     { timestamp: new Date().toLocaleTimeString(), message: 'CipherShield initialized', type: 'info' },
   ],
+  decryptTarget: null,
 
   setPlaintext: (text) => set((state) => {
     persistSessionState({ ...state, plaintext: text });
@@ -128,6 +131,11 @@ export const useCipherStore = create<EncryptionState>((set) => ({
     return { logs: [] };
   }),
 
+  setDecryptTarget: (item) => set((state) => {
+    persistSessionState({ ...state, decryptTarget: item });
+    return { decryptTarget: item };
+  }),
+
   resetSession: () => set((state) => {
     const nextLogs: LogEntry[] = [
       { timestamp: new Date().toLocaleTimeString(), message: 'Session reset', type: 'info' },
@@ -145,6 +153,7 @@ export const useCipherStore = create<EncryptionState>((set) => ({
       currentTab: 'encrypt',
       history: [],
       logs: nextLogs,
+      decryptTarget: null,
     });
 
     return {
@@ -158,6 +167,7 @@ export const useCipherStore = create<EncryptionState>((set) => ({
       currentTab: 'encrypt',
       history: [],
       logs: nextLogs,
+      decryptTarget: null,
     };
   }),
 }));

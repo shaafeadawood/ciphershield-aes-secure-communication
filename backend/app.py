@@ -39,6 +39,12 @@ async def health_check():
     return {"status": "ok", "service": "CipherShield"}
 
 
+@app.get("/api/health")
+async def api_health_check():
+    """API-scoped health check endpoint for the frontend proxy."""
+    return {"status": "ok", "service": "CipherShield"}
+
+
 # Serve frontend production assets after API and health routes are defined.
 frontend_dist_path = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
 if os.path.exists(frontend_dist_path):

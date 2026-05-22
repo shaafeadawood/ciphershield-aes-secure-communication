@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Activity, BarChart2, Binary, History, Layers, Lock, Radar, Shield, Terminal, Unlock } from 'lucide-react';
+import { Activity, BarChart2, Binary, Clock, Layers, Lock, Shield, Terminal, Unlock, Zap } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { CyberSpace } from '../visualization/CyberSpace';
@@ -17,8 +17,8 @@ import '../../styles/sections/encryption-experience.css';
 const tabConfig = [
   { id: 'encrypt' as const, label: 'Encrypt', icon: Lock },
   { id: 'decrypt' as const, label: 'Decrypt', icon: Unlock },
-  { id: 'history' as const, label: 'History', icon: History },
-  { id: 'simulation' as const, label: 'Simulation', icon: Radar },
+  { id: 'history' as const, label: 'History', icon: Clock },
+  { id: 'simulation' as const, label: 'Simulation', icon: Zap },
   { id: 'analysis' as const, label: 'Analysis', icon: BarChart2 },
 ];
 
@@ -52,7 +52,7 @@ export const EncryptionExperience: React.FC = () => {
   };
 
   return (
-    <section id="encryption" className="control-center-section">
+    <section id="operations-center" className="control-center-section">
       <div className="control-center-background">
         <CyberSpace isActive />
       </div>
@@ -114,9 +114,26 @@ export const EncryptionExperience: React.FC = () => {
                     type="button"
                     onClick={() => setCurrentTab(tab.id)}
                     className={`control-tab ${isActive ? 'control-tab-active' : ''}`}
+                    style={{ position: 'relative', overflow: 'hidden' }}
                   >
-                    <Icon size={14} />
-                    {tab.label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="control-tab-pill"
+                        className="control-tab-pill"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          borderRadius: 999,
+                          background: 'linear-gradient(90deg, rgba(0, 217, 255, 0.16), rgba(79, 70, 229, 0.16))',
+                          border: '1px solid rgba(0, 217, 255, 0.28)',
+                          boxShadow: '0 0 20px rgba(0, 217, 255, 0.14)',
+                        }}
+                      />
+                    )}
+                    <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                      <Icon size={14} />
+                      {tab.label}
+                    </span>
                   </button>
                 );
               })}

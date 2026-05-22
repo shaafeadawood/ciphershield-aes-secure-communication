@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Copy, Trash2, Clock, Shield } from 'lucide-react';
+import { Copy, Trash2, Clock, Shield, KeyRound } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
 import { ReportExport } from '../ReportExport';
 
 export const HistoryPanel: React.FC = () => {
-  const { history, clearHistory, addLog } = useCipherStore();
+  const { history, clearHistory, addLog, setDecryptTarget, setCurrentTab } = useCipherStore();
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -84,6 +84,17 @@ export const HistoryPanel: React.FC = () => {
                       className="p-1 hover:bg-white/10 rounded transition-colors"
                     >
                       <Copy size={14} />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setDecryptTarget(item);
+                        setCurrentTab('decrypt');
+                        addLog('[SYS] Loaded history packet into decrypt panel', 'info');
+                      }}
+                      title="Quick decrypt"
+                      className="p-1 hover:bg-white/10 rounded transition-colors"
+                    >
+                      <KeyRound size={14} />
                     </button>
                   </div>
                 </div>

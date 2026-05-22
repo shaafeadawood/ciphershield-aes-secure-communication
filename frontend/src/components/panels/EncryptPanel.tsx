@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Copy, RefreshCw, Lock, Key, ArrowRight, ShieldCheck, FileText } from 'lucide-react';
+import { ChevronDown, Copy, Loader2, RefreshCw, Lock, Key, ArrowRight, ShieldCheck, FileText } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
-import { cipherApi } from '../../services/api';
+import { encryptMessage, generateKey } from '../../services/cipherService';
 
 export const EncryptPanel: React.FC = () => {
   const {
@@ -23,6 +23,11 @@ export const EncryptPanel: React.FC = () => {
     addLog,
   } = useCipherStore();
 
+  const [isGeneratingKey, setIsGeneratingKey] = useState(false);
+  const [isEncrypting, setIsEncrypting] = useState(false);
+  const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const caesarTransform = (value: string, shift = 3) => {
     return value.replace(/[a-z]/gi, (character) => {
       const baseCode = character === character.toUpperCase() ? 65 : 97;
@@ -32,33 +37,45 @@ export const EncryptPanel: React.FC = () => {
 
   const caesarPreview = plaintext ? caesarTransform(plaintext) : '';
   const handleGenerateKey = async () => {
+    setIsGeneratingKey(true);
     setLoading(true);
-    addLog('Generating new AES-256 encryption key...', 'info');
+    setErrorMessage('');
+    addLog('[SYS] Generating new AES-256 encryption key...', 'info');
     try {
-      const response = await cipherApi.generateKey();
+      const response = await generateKey();
       setEncryptionKey(response.key);
-      addLog('AES-256 key generated successfully', 'success');
-    } catch (error) {
-      addLog('Failed to generate key', 'error');
+      addLog('[OK] AES-256 key generated successfully', 'success');
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const nextMessage = `[ERR] Failed to generate key — ${message}`;
+      setErrorMessage(nextMessage);
+      addLog(nextMessage, 'error');
     } finally {
+      setIsGeneratingKey(false);
       setLoading(false);
     }
   };
 
   const handleEncrypt = async () => {
     if (!plaintext.trim()) {
-      addLog('Please enter text to encrypt', 'error');
+      const nextMessage = '[ERR] Please enter text to encrypt';
+      setErrorMessage(nextMessage);
+      addLog(nextMessage, 'error');
       return;
     }
     if (!encryptionKey.trim()) {
-      addLog('Please generate an encryption key first', 'error');
+      const nextMessage = '[ERR] Please generate an encryption key first';
+      setErrorMessage(nextMessage);
+      addLog(nextMessage, 'error');
       return;
     }
 
+    setIsEncrypting(true);
     setLoading(true);
-    addLog('Encrypting message...', 'info');
+    setErrorMessage('');
+    addLog('[SYS] Encrypting message...', 'info');
     try {
-      const response = await cipherApi.encrypt(plaintext, encryptionKey);
+      const response = await encryptMessage(plaintext, encryptionKey);
       setCiphertext(response.ciphertext);
       setNonce(response.nonce);
       setTag(response.tag);
@@ -71,11 +88,15 @@ export const EncryptPanel: React.FC = () => {
         nonce: response.nonce,
         tag: response.tag,
       });
-      addLog('Message encrypted successfully', 'success');
-      addLog('Ciphertext, nonce, and authentication tag captured for the session', 'info');
-    } catch (error: any) {
-      addLog(`Encryption failed: ${error.message}`, 'error');
+      addLog('[OK] Message encrypted successfully', 'success');
+      addLog('[SYS] Ciphertext, nonce, and authentication tag captured for the session', 'info');
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const nextMessage = `[ERR] Encryption failed — ${message}`;
+      setErrorMessage(nextMessage);
+      addLog(nextMessage, 'error');
     } finally {
+      setIsEncrypting(false);
       setLoading(false);
     }
   };
@@ -92,6 +113,19 @@ export const EncryptPanel: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
     >
+      <AnimatePresence>
+        {errorMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="p-3 rounded-lg border border-red-500/30 bg-red-500/10 text-red-300 text-sm font-mono"
+          >
+            {errorMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="glass-panel p-6 border-l-2 border-neon-cyan/50">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <h3 className="text-sm font-bold text-neon-cyan/80 flex items-center gap-2 uppercase tracking-wider">
@@ -104,13 +138,13 @@ export const EncryptPanel: React.FC = () => {
 
         <motion.button
           onClick={handleGenerateKey}
-          disabled={loading}
+          disabled={loading || isGeneratingKey || isEncrypting}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="w-full px-6 py-3 bg-gradient-to-r from-neon-cyan/20 to-neon-purple/20 border border-neon-cyan/50 text-neon-cyan rounded-lg font-medium hover:border-neon-cyan hover:shadow-neon transition-all disabled:opacity-50 flex items-center justify-center gap-2"
         >
-          <RefreshCw size={16} />
-          Generate New Key
+          {isGeneratingKey ? <Loader2 size={16} className="animate-spin" /> : <RefreshCw size={16} />}
+          {isGeneratingKey ? 'Generating...' : 'Generate New Key'}
         </motion.button>
 
         {encryptionKey && (
@@ -174,13 +208,13 @@ export const EncryptPanel: React.FC = () => {
 
       <motion.button
         onClick={handleEncrypt}
-        disabled={loading || !plaintext.trim() || !encryptionKey.trim()}
+        disabled={loading || isGeneratingKey || isEncrypting || !plaintext.trim() || !encryptionKey.trim()}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className="w-full px-6 py-4 bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-bold rounded-lg hover:shadow-neon transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
-        <Lock size={20} />
-        {loading ? 'Encrypting...' : 'Encrypt Message'}
+        {isEncrypting ? <Loader2 size={20} className="animate-spin" /> : <Lock size={20} />}
+        {isEncrypting ? 'Encrypting...' : 'Encrypt Message'}
       </motion.button>
 
       <AnimatePresence mode="wait">
@@ -240,6 +274,43 @@ export const EncryptPanel: React.FC = () => {
                 >
                   Open Decrypt Panel
                 </button>
+              </div>
+
+              <div className="mt-4 border-t border-neon-green/10 pt-4">
+                <motion.button
+                  type="button"
+                  onClick={() => setShowTechnicalDetails((current) => !current)}
+                  className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-neon-green/70"
+                >
+                  <motion.span animate={{ rotate: showTechnicalDetails ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                    <ChevronDown size={14} />
+                  </motion.span>
+                  Technical Details
+                </motion.button>
+
+                <AnimatePresence>
+                  {showTechnicalDetails && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="mt-3 grid gap-3 md:grid-cols-2">
+                        <div className="p-3 bg-black/40 rounded-lg border border-neon-green/10">
+                          <div className="text-[11px] uppercase tracking-[0.25em] text-neon-green/50 mb-2">Nonce</div>
+                          <div className="font-mono text-xs text-white break-all">{nonce || 'Not captured yet'}</div>
+                        </div>
+
+                        <div className="p-3 bg-black/40 rounded-lg border border-neon-green/10">
+                          <div className="text-[11px] uppercase tracking-[0.25em] text-neon-green/50 mb-2">Auth Tag</div>
+                          <div className="font-mono text-xs text-white break-all">{tag || 'Not captured yet'}</div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </motion.div>

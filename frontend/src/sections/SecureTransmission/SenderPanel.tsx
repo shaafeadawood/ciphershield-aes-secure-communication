@@ -43,7 +43,6 @@ export const SenderPanel: React.FC<SenderPanelProps> = ({ onTransmit, transmissi
         <Send size={14} /> Transmit Encrypted Packet
       </motion.button>
 
-      <AnimatePresence />
     </motion.div>
   );
 };

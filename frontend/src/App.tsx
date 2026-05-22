@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   const handleExploreClick = () => {
-    document.getElementById('encryption')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('operations-center')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -34,20 +34,43 @@ function App() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Hero Section */}
           <Hero onExploreClick={handleExploreClick} />
 
-          {/* Encryption Experience */}
-          <EncryptionExperience />
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-120px' }}
+            transition={{ duration: 0.45 }}
+          >
+            <EncryptionExperience />
+          </motion.section>
 
-          {/* Secure Transmission */}
-          <SecureTransmissionSection />
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-120px' }}
+            transition={{ duration: 0.45 }}
+          >
+            <SecureTransmissionSection />
+          </motion.section>
 
-          {/* About Section */}
-          <About />
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-120px' }}
+            transition={{ duration: 0.45 }}
+          >
+            <About />
+          </motion.section>
 
-          {/* Footer */}
-          <Footer />
+          <motion.section
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4 }}
+          >
+            <Footer />
+          </motion.section>
         </motion.main>
       </AnimatePresence>
     </motion.div>

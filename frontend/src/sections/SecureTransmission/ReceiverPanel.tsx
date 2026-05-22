@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Server, CheckCircle, ShieldCheck, ShieldAlert, XCircle } from 'lucide-react';
+import { Server, CheckCircle, ShieldAlert } from 'lucide-react';
 
 export interface ReceiverPanelProps {
   decryptedOutput: string;

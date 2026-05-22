@@ -5,7 +5,7 @@ import '../../styles/sections/about.css';
 
 export const About: React.FC = () => {
   return (
-    <section className="about-section">
+    <section className="about-section" id="about-section">
       <div className="container">
         <motion.div
           className="about-header"
