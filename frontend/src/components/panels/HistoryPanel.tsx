@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Copy, Trash2, Clock, Shield } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
+import { ReportExport } from '../ReportExport';
 
 export const HistoryPanel: React.FC = () => {
   const { history, clearHistory, addLog } = useCipherStore();
@@ -124,6 +125,10 @@ export const HistoryPanel: React.FC = () => {
       <p className="text-xs text-neon-cyan/40 font-mono">
         Total: {history.length} / 50 entries
       </p>
+
+      <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--border-color)' }}>
+        <ReportExport />
+      </div>
     </motion.div>
   );
 };
