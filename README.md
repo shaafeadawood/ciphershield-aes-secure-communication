@@ -28,14 +28,14 @@ The app pairs a React + TypeScript frontend with a FastAPI backend. The frontend
 
 ## API
 
-| Method | Path | Description |
-| --- | --- | --- |
-| `GET` | `/` | Serves the compiled frontend in production |
-| `GET` | `/health` | Backend health probe |
-| `GET` | `/api/health` | Backend health probe used by the frontend |
-| `POST` | `/api/cipher/generate-key` | Generates an AES-256 key |
-| `POST` | `/api/cipher/encrypt` | Encrypts plaintext with AES-256-GCM |
-| `POST` | `/api/cipher/decrypt` | Decrypts AES-256-GCM payloads |
+| Method | Path                       | Description                                |
+| ------ | -------------------------- | ------------------------------------------ |
+| `GET`  | `/`                        | Serves the compiled frontend in production |
+| `GET`  | `/health`                  | Backend health probe                       |
+| `GET`  | `/api/health`              | Backend health probe used by the frontend  |
+| `POST` | `/api/cipher/generate-key` | Generates an AES-256 key                   |
+| `POST` | `/api/cipher/encrypt`      | Encrypts plaintext with AES-256-GCM        |
+| `POST` | `/api/cipher/decrypt`      | Decrypts AES-256-GCM payloads              |
 
 ## Project Structure
 
