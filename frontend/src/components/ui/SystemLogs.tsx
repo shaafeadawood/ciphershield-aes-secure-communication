@@ -39,6 +39,21 @@ export const SystemLogs: React.FC = () => {
     }
   };
 
+  const prefixColor = (prefix: string) => {
+    switch (prefix) {
+      case '[SYS]':
+        return 'var(--color-cyan, #22d3ee)';
+      case '[OK]':
+        return 'var(--color-green, #4ade80)';
+      case '[WARN]':
+        return 'var(--color-amber, #fbbf24)';
+      case '[ERR]':
+        return 'var(--color-red, #f87171)';
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <motion.div
       className="glass-panel p-4 h-full flex flex-col border-t border-neon-cyan/20"
@@ -75,21 +90,68 @@ export const SystemLogs: React.FC = () => {
               <p className="text-xs">No logs yet</p>
             </motion.div>
           ) : (
-            logs.map((log, idx) => (
-              <motion.div
-                key={idx}
-                className={`flex gap-2 items-start ${getLogColor(log.type)} border-l-2 pl-2`}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-              >
-                <span className="text-neon-cyan/50 flex-shrink-0">[{log.timestamp}]</span>
-                <span className="break-all">
-                  {idx === 0 ? typedMessage : log.message}
-                  {idx === 0 ? <span className="terminal-cursor" /> : null}
-                </span>
-              </motion.div>
-            ))
+            logs.map((log, idx) => {
+              // Split full message on first space to extract prefix token (e.g. "[SYS]")
+              const full = log.message || '';
+              const firstSpace = full.indexOf(' ');
+              const prefix = firstSpace > -1 ? full.slice(0, firstSpace) : '';
+
+              // For the animated latest message (idx === 0) we color only the prefix portion
+              if (idx === 0) {
+                const typed = typedMessage;
+                const prefixLen = prefix ? prefix.length : 0;
+                const left = typed.slice(0, Math.min(typed.length, prefixLen));
+                const right = typed.length > prefixLen ? typed.slice(prefixLen) : '';
+
+                return (
+                  <motion.div
+                    key={idx}
+                    className={`flex gap-2 items-start ${getLogColor(log.type)} border-l-2 pl-2`}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                  >
+                    <span className="text-neon-cyan/50 flex-shrink-0">[{log.timestamp}]</span>
+                    <span className="break-all">
+                      {prefixLen > 0 ? (
+                        <>
+                          <span style={{ color: prefixColor(prefix) }}>{left}</span>
+                          <span>{right}</span>
+                        </>
+                      ) : (
+                        <>{typed}</>
+                      )}
+                      <span className="terminal-cursor" />
+                    </span>
+                  </motion.div>
+                );
+              }
+
+              // For non-animated entries, render the full message but color only the prefix token
+              const rest = firstSpace > -1 ? full.slice(firstSpace) : '';
+
+              return (
+                <motion.div
+                  key={idx}
+                  className={`flex gap-2 items-start ${getLogColor(log.type)} border-l-2 pl-2`}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                >
+                  <span className="text-neon-cyan/50 flex-shrink-0">[{log.timestamp}]</span>
+                  <span className="break-all">
+                    {prefix ? (
+                      <>
+                        <span style={{ color: prefixColor(prefix) }}>{prefix}</span>
+                        <span>{rest}</span>
+                      </>
+                    ) : (
+                      <>{full}</>
+                    )}
+                  </span>
+                </motion.div>
+              );
+            })
           )}
         </AnimatePresence>
       </div>
