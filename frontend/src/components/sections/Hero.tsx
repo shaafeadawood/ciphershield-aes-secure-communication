@@ -94,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
           className="hero-description"
           variants={staggerItem}
         >
-          Experience military-grade encryption with a cinematic interface. Secure your communication with quantum-resistant AES-256-GCM algorithm, wrapped in a premium, immersive web experience.
+          Experience military-grade encryption with a cinematic interface. Secure your communication with AES-256-GCM, wrapped in a premium, immersive web experience.
         </motion.p>
 
         {/* CTA Buttons */}

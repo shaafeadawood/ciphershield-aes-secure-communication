@@ -133,12 +133,12 @@ export const AboutPanel: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            { icon: '🏦', name: 'Banking Systems', desc: 'Secure transaction encryption' },
-            { icon: '💬', name: 'Messaging Apps', desc: 'WhatsApp, Signal, Telegram use AES' },
-            { icon: '🔐', name: 'Password Managers', desc: 'LastPass, 1Password encryption' },
-            { icon: '☁️', name: 'Cloud Storage', desc: 'Dropbox, Google Drive encryption' },
-            { icon: '🌐', name: 'HTTPS/SSL', desc: 'Secure web communication protocol' },
-            { icon: '🏛️', name: 'Government', desc: 'Military and classified data protection' },
+            { icon: '01', name: 'Banking Systems', desc: 'Secure transaction encryption' },
+            { icon: '02', name: 'Messaging Apps', desc: 'WhatsApp, Signal, Telegram use AES' },
+            { icon: '03', name: 'Password Managers', desc: 'LastPass, 1Password encryption' },
+            { icon: '04', name: 'Cloud Storage', desc: 'Dropbox, Google Drive encryption' },
+            { icon: '05', name: 'HTTPS/SSL', desc: 'Secure web communication protocol' },
+            { icon: '06', name: 'Government', desc: 'Military and classified data protection' },
           ].map((app, idx) => (
             <motion.div
               key={idx}
@@ -156,10 +156,10 @@ export const AboutPanel: React.FC = () => {
       {/* Key Statistics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Key Size', value: '256 bits', icon: '🔑' },
-          { label: 'Algorithm', value: 'AES-GCM', icon: '⚙️' },
-          { label: 'Security', value: 'Military Grade', icon: '🛡️' },
-          { label: 'Performance', value: 'Real-time', icon: '⚡' },
+          { label: 'Key Size', value: '256 bits', icon: 'K1' },
+          { label: 'Algorithm', value: 'AES-GCM', icon: 'A2' },
+          { label: 'Security', value: 'Military Grade', icon: 'S3' },
+          { label: 'Performance', value: 'Real-time', icon: 'P4' },
         ].map((stat, idx) => (
           <motion.div
             key={idx}

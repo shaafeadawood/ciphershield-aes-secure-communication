@@ -11,12 +11,17 @@
 }
 
 .footer-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   inset-x: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(0, 217, 255, 0.3) 50%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 217, 255, 0.3) 50%,
+    transparent 100%
+  );
 }
 
 .footer-content {
@@ -77,7 +82,7 @@
 }
 
 .footer-links a::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;

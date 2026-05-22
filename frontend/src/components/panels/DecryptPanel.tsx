@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Copy, Unlock } from 'lucide-react';
+import { Copy, Unlock, KeyRound, TimerReset } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
 import { cipherApi } from '../../services/api';
 
@@ -11,6 +11,8 @@ export const DecryptPanel: React.FC = () => {
     decrypted,
     setDecrypted,
     encryptionKey,
+    nonce: storedNonce,
+    tag: storedTag,
     loading,
     setLoading,
     addLog,
@@ -18,6 +20,15 @@ export const DecryptPanel: React.FC = () => {
 
   const [nonce, setNonce] = useState('');
   const [tag, setTag] = useState('');
+
+  useEffect(() => {
+    if (storedNonce) {
+      setNonce(storedNonce);
+    }
+    if (storedTag) {
+      setTag(storedTag);
+    }
+  }, [storedNonce, storedTag]);
 
   const handleDecrypt = async () => {
     if (!ciphertext.trim()) {
@@ -59,48 +70,69 @@ export const DecryptPanel: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
     >
-      {/* Nonce & Tag Inputs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="glass-panel p-4">
-          <label className="text-xs font-bold text-neon-cyan/60 mb-2 uppercase tracking-wider block">
-            Nonce (Base64)
-          </label>
-          <input
-            type="text"
-            value={nonce}
-            onChange={(e) => setNonce(e.target.value)}
-            placeholder="Enter nonce..."
-            className="w-full bg-black/50 border border-neon-cyan/20 rounded p-3 text-white placeholder-neon-cyan/30 font-mono text-sm focus:border-neon-cyan focus:outline-none"
-          />
+      <div className="glass-panel p-6 border-l-2 border-neon-cyan/50">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <h3 className="text-sm font-bold text-neon-cyan/80 uppercase tracking-wider flex items-center gap-2">
+            <KeyRound size={16} /> Decrypt Session Payload
+          </h3>
+          <button
+            onClick={() => {
+              setNonce(storedNonce);
+              setTag(storedTag);
+              addLog('Session payload reloaded into decrypt fields', 'info');
+            }}
+            className="px-3 py-1.5 text-xs rounded border border-neon-cyan/20 text-neon-cyan/70 hover:bg-white/5 transition-colors flex items-center gap-2"
+          >
+            <TimerReset size={12} /> Reload values
+          </button>
         </div>
-        <div className="glass-panel p-4">
-          <label className="text-xs font-bold text-neon-cyan/60 mb-2 uppercase tracking-wider block">
-            Tag (Base64)
-          </label>
-          <input
-            type="text"
-            value={tag}
-            onChange={(e) => setTag(e.target.value)}
-            placeholder="Enter tag..."
-            className="w-full bg-black/50 border border-neon-cyan/20 rounded p-3 text-white placeholder-neon-cyan/30 font-mono text-sm focus:border-neon-cyan focus:outline-none"
-          />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="text-xs font-bold text-neon-cyan/60 mb-2 uppercase tracking-wider block">
+              Nonce
+            </label>
+            <input
+              type="text"
+              value={nonce}
+              onChange={(e) => setNonce(e.target.value)}
+              placeholder="Nonce captured from encryption"
+              className="w-full bg-black/50 border border-neon-cyan/20 rounded p-3 text-white placeholder-neon-cyan/30 font-mono text-sm focus:border-neon-cyan focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs font-bold text-neon-cyan/60 mb-2 uppercase tracking-wider block">
+              Authentication Tag
+            </label>
+            <input
+              type="text"
+              value={tag}
+              onChange={(e) => setTag(e.target.value)}
+              placeholder="Tag captured from encryption"
+              className="w-full bg-black/50 border border-neon-cyan/20 rounded p-3 text-white placeholder-neon-cyan/30 font-mono text-sm focus:border-neon-cyan focus:outline-none"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Ciphertext Input */}
       <div className="glass-panel p-6">
-        <h3 className="text-sm font-bold text-neon-cyan/80 mb-4 uppercase tracking-wider">
-          Encrypted Message
-        </h3>
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <h3 className="text-sm font-bold text-neon-cyan/80 uppercase tracking-wider">
+            Encrypted Message
+          </h3>
+          <div className="text-xs text-neon-cyan/50 font-mono">
+            {ciphertext.length} characters
+          </div>
+        </div>
         <textarea
           value={ciphertext}
           onChange={(e) => setCiphertext(e.target.value)}
-          placeholder="Enter encrypted message here..."
+          placeholder="Encrypted message appears here after encryption"
           className="w-full h-32 bg-black/50 border border-neon-cyan/20 rounded-lg p-4 text-white placeholder-neon-cyan/30 font-mono text-sm focus:border-neon-cyan focus:outline-none resize-none"
         />
       </div>
 
-      {/* Decrypt Button */}
       <motion.button
         onClick={handleDecrypt}
         disabled={loading || !ciphertext.trim() || !nonce.trim() || !tag.trim()}
@@ -112,7 +144,6 @@ export const DecryptPanel: React.FC = () => {
         {loading ? 'Decrypting...' : 'Decrypt Message'}
       </motion.button>
 
-      {/* Decrypted Output */}
       {decrypted && (
         <motion.div
           className="glass-panel p-6 border-l-2 border-neon-green/50"

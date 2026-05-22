@@ -56,36 +56,43 @@ frontend/src/
 ### Color Palette
 
 **Blacks & Grays:**
+
 - Pure Black: `#000000`
 - Deep: `#0a0a0a`
 - Charcoal: `#1a1a1a`
 
 **Dark Blues:**
+
 - Navy Darkest: `#0d1117`
 - Navy Light: `#252e3f`
 
 **Accent Colors:**
+
 - Neon Cyan: `#00d9ff` (primary accent)
 - Electric Blue: `#0099ff` (secondary)
 - Muted Blue: `#0066cc`
 
 **Text:**
+
 - Primary: `#ffffff`
 - Secondary: `#b0b8c1`
 - Tertiary: `#7a8592`
 
 **Gradients:**
+
 - Hero: `135deg, #0a0a0a → #0f1419 → #0a0a0a`
 - Text: `90deg, #ffffff → #00d9ff → #0099ff`
 
 ### Typography
 
 **Fonts:**
+
 - Display: "Syne" (premium, modern sans-serif)
 - Body: "Inter" (clean, readable)
 - Mono: "Space Mono" (code/terminal)
 
 **Scale:**
+
 - Display XL: `clamp(2.5rem, 8vw, 5rem)` - Hero titles
 - Display MD: `clamp(1.5rem, 3vw, 2.5rem)` - Section titles
 - Body LG: `1.125rem` - Large body text
@@ -105,12 +112,14 @@ frontend/src/
 ### Shadow & Glow Effects
 
 **Glow Shadows (Neon):**
+
 - SM: `0 0 8px rgba(0, 217, 255, 0.2)`
 - MD: `0 0 16px rgba(0, 217, 255, 0.3)`
 - LG: `0 0 32px rgba(0, 217, 255, 0.4)`
 - XL: `0 0 48px rgba(0, 217, 255, 0.5)`
 
 **Elevation Shadows:**
+
 - SM: `0 2px 8px rgba(0, 0, 0, 0.3)`
 - MD: `0 8px 24px rgba(0, 0, 0, 0.4)`
 - LG: `0 16px 40px rgba(0, 0, 0, 0.5)`
@@ -123,6 +132,7 @@ frontend/src/
 ### 1. Navbar (`Navbar.tsx`)
 
 **Features:**
+
 - Fixed positioning with backdrop blur
 - Subtle border-top gradient
 - Smooth slide-in animation on load
@@ -132,6 +142,7 @@ frontend/src/
 - Hamburger animation transitions
 
 **Interactions:**
+
 - Logo scales on hover (1.05x)
 - Menu items show cyan underline on hover
 - Mobile menu slides open/closed smoothly
@@ -143,6 +154,7 @@ frontend/src/
 ### 2. Hero Section (`Hero.tsx`)
 
 **Features:**
+
 - Full-viewport cinematic experience
 - Animated badge with uppercase label
 - Massive title with shimmer gradient animation
@@ -155,6 +167,7 @@ frontend/src/
 - Smooth fade-in reveal animations
 
 **Animations:**
+
 - Staggered entrance animation
 - Title shimmer effect (3s infinite)
 - Floating element animation (3s loop)
@@ -163,6 +176,7 @@ frontend/src/
 - Staggered button appearance
 
 **Text:**
+
 - Title: "CipherShield" (with gradient shimmer)
 - Subtitle: "Advanced Secure Communication using AES-256-GCM Cryptography"
 - Description: Feature highlights
@@ -172,6 +186,7 @@ frontend/src/
 ### 3. Encryption Experience (`EncryptionExperience.tsx`)
 
 **Features:**
+
 - Three-column grid layout: Input | Divider | Output
 - Interactive encryption interface
 - Real-time API integration with `useApi` hook
@@ -184,6 +199,7 @@ frontend/src/
 - Three-card info section below
 
 **Interactions:**
+
 - Textarea focuses with border & glow effect
 - Security badge changes color (error/success)
 - Encrypt button disables when empty
@@ -191,7 +207,8 @@ frontend/src/
 - Copy button provides visual feedback
 - Divider displays connecting line with icon
 
-**Styling:** 
+**Styling:**
+
 - Glassmorphic cards
 - Dark backgrounds with 30% opacity
 - Subtle borders with 10-20% cyan opacity
@@ -225,6 +242,7 @@ frontend/src/
 **Sizes:** sm, md, lg
 
 **Animations:**
+
 - Magnetic hover effect (scale 1.08)
 - Tap interaction (scale 0.95)
 - Spring easing animation
@@ -234,6 +252,7 @@ frontend/src/
 ### 5. Card Component (`Card.tsx`)
 
 **Features:**
+
 - Glassmorphic design
 - Subtle gradient overlay
 - Responsive scroll-reveal animation
@@ -241,6 +260,7 @@ frontend/src/
 - Premium shadows
 
 **Styling:**
+
 - Background: `rgba(15, 15, 23, 0.5)`
 - Border: 1px cyan at 10% opacity
 - Backdrop: `blur(10px)`
@@ -251,6 +271,7 @@ frontend/src/
 ### 6. About Section (`About.tsx`)
 
 **Features:**
+
 - Premium typography
 - Three-column content grid (auto-fit)
 - Stat cards with animated numbers
@@ -258,11 +279,13 @@ frontend/src/
 - Hover effects on cards
 
 **Content:**
+
 1. Military-Grade Encryption
 2. Zero-Knowledge Architecture
 3. Premium Interface
 
 **Stats:**
+
 - 256-bit encryption key
 - 100% client-side processing
 - AEAD authenticated
@@ -273,6 +296,7 @@ frontend/src/
 ### 7. Footer (`Footer.tsx`)
 
 **Features:**
+
 - Premium dark background
 - Gradient border-top
 - Four-column footer grid
@@ -281,6 +305,7 @@ frontend/src/
 - Technology badges
 
 **Sections:**
+
 - Branding & description
 - Product links
 - Company links
@@ -293,6 +318,7 @@ frontend/src/
 ### Reusable Motion Variants (`variants.ts`)
 
 **Entrance Animations:**
+
 - `fadeInUp` - Fade + slide up
 - `fadeInDown` - Fade + slide down
 - `fadeInLeft` - Fade + slide left
@@ -301,30 +327,36 @@ frontend/src/
 - `rotateIn` - Rotate entrance
 
 **Container Animations:**
+
 - `staggerContainer` - Parent with stagger
 - `staggerItem` - Staggered children
 
 **Hover Effects:**
+
 - `hoverTilt` - Lift + tap
 - `hoverGlow` - Enhanced shadow
 - `hoverScale` - Scale up/down
 - `magneticHover` - Spring-based magnetic
 
 **Scroll Animations:**
+
 - `scrollReveal` - Reveal on scroll
 - `scrollRevealLeft` - Slide from left
 - `scrollRevealRight` - Slide from right
 
 **Continuous Animations:**
+
 - `floating` - Y-axis float (4s)
 - `pulse` - Opacity pulse (2s)
 
 **Special Effects:**
+
 - `shimmerText` - Background position shimmer
 - `typewriterContainer` - Staggered text reveal
 - `typewriterChar` - Individual character animation
 
 **Easing:**
+
 - Smooth cubic-bezier: `[0.22, 1, 0.36, 1]`
 - Spring stiffness: `400`
 - Damping: `10`
@@ -336,23 +368,28 @@ frontend/src/
 ### CSS Variables (`globals.css`)
 
 **Color Variables:**
+
 - `--color-black-*` - Black shades
 - `--color-navy-*` - Navy shades
 - `--color-blue-*` - Blue shades
 - `--color-text-*` - Text colors
 
 **Typography:**
+
 - `--font-display` - Syne
 - `--font-mono` - Space Mono
 - `--font-body` - Inter
 
 **Spacing:**
+
 - `--spacing-xs` through `--spacing-3xl`
 
 **Border Radius:**
+
 - `--radius-sm` through `--radius-xl`
 
 **Transitions:**
+
 - `--duration-fast` - 0.15s
 - `--duration-normal` - 0.3s
 - `--duration-slow` - 0.5s
@@ -361,26 +398,43 @@ frontend/src/
 ### Key Animations
 
 **Shimmer:**
+
 ```css
 @keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
 }
 ```
 
 **Glow:**
+
 ```css
 @keyframes glow {
-  0%, 100% { text-shadow: 0 0 10px rgba(0, 217, 255, 0.5); }
-  50% { text-shadow: 0 0 20px rgba(0, 217, 255, 0.8); }
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(0, 217, 255, 0.8);
+  }
 }
 ```
 
 **Float:**
+
 ```css
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 ```
 
@@ -402,6 +456,7 @@ frontend/src/
    - Returns: `plaintext: string`
 
 **Error Handling:**
+
 - Try-catch blocks
 - Console error logging
 - User-friendly error states
@@ -419,23 +474,28 @@ frontend/src/
 ### Responsive Features
 
 **Navbar:**
+
 - Desktop: Full horizontal menu
 - Mobile: Hamburger menu with slide-in
 
 **Hero:**
+
 - Responsive font scaling with `clamp()`
 - Mobile: Hides floating element
 
 **Encryption Experience:**
+
 - Desktop: 3-column grid
 - Tablet: 1 column with visible divider
 - Mobile: Single column, no divider
 
 **Cards:**
+
 - Desktop: Multi-column auto-fit
 - Mobile: Single column with adjusted padding
 
 **Footer:**
+
 - Desktop: 4-column grid
 - Tablet: 2-column grid
 - Mobile: Single column, centered
@@ -445,11 +505,13 @@ frontend/src/
 ## Performance Optimizations
 
 **Bundle Size:**
+
 - JavaScript: 302.48 KB (uncompressed)
 - CSS: 38.93 KB (uncompressed)
 - Gzipped: 100.78 KB + 7.74 KB
 
 **Optimization Techniques:**
+
 - CSS-in-JS: Component-scoped styles
 - Lazy animation rendering
 - Efficient gradient usage
@@ -457,6 +519,7 @@ frontend/src/
 - Viewport-triggered animations
 
 **Future Improvements:**
+
 - Code splitting for sections
 - Dynamic imports for animations
 - WebP image formats
@@ -478,6 +541,7 @@ frontend/src/
 **New Files Created (18 total):**
 
 ### Components
+
 ```
 frontend/src/components/
 ├── ui/
@@ -494,18 +558,21 @@ frontend/src/components/
 ```
 
 ### Hooks
+
 ```
 frontend/src/hooks/
 └── useApi.ts (50 lines)
 ```
 
 ### Theme
+
 ```
 frontend/src/theme/
 └── colors.ts (80 lines)
 ```
 
 ### Styles
+
 ```
 frontend/src/styles/
 ├── globals.css (350 lines)

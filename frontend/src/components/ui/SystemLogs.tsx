@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Trash2 } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
 
 export const SystemLogs: React.FC = () => {
   const { logs, clearLogs } = useCipherStore();
+  const [typedMessage, setTypedMessage] = useState('');
+
+  useEffect(() => {
+    const latestLog = logs[0]?.message ?? '';
+    setTypedMessage('');
+
+    if (!latestLog) {
+      return;
+    }
+
+    let index = 0;
+    const timer = window.setInterval(() => {
+      index += 1;
+      setTypedMessage(latestLog.slice(0, index));
+
+      if (index >= latestLog.length) {
+        window.clearInterval(timer);
+      }
+    }, 18);
+
+    return () => window.clearInterval(timer);
+  }, [logs]);
 
   const getLogColor = (type: 'info' | 'success' | 'error') => {
     switch (type) {
@@ -62,15 +84,18 @@ export const SystemLogs: React.FC = () => {
                 exit={{ opacity: 0, x: 10 }}
               >
                 <span className="text-neon-cyan/50 flex-shrink-0">[{log.timestamp}]</span>
-                <span className="break-all">{log.message}</span>
+                <span className="break-all">
+                  {idx === 0 ? typedMessage : log.message}
+                  {idx === 0 ? <span className="terminal-cursor" /> : null}
+                </span>
               </motion.div>
             ))
           )}
         </AnimatePresence>
       </div>
 
-      <p className="text-xs text-neon-cyan/40 mt-2 text-center">
-        {logs.length} / 100 logs
+      <p className="text-xs text-neon-cyan/40 mt-2 text-center font-mono">
+        CipherShield / live terminal stream | {logs.length} / 100 logs
       </p>
     </motion.div>
   );

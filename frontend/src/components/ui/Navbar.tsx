@@ -7,7 +7,7 @@ export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { label: 'Encryption', href: '#encryption' },
+    { label: 'Control Center', href: '#encryption' },
     { label: 'Security', href: '#security' },
     { label: 'About', href: '#about' },
     { label: 'Documentation', href: '#docs' },

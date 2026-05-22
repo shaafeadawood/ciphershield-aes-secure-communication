@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Copy, Trash2, Clock } from 'lucide-react';
+import { Copy, Trash2, Clock, Shield } from 'lucide-react';
 import { useCipherStore } from '../../store/cipherStore';
 
 export const HistoryPanel: React.FC = () => {
@@ -66,7 +66,10 @@ export const HistoryPanel: React.FC = () => {
                   <span className="text-xs font-mono text-neon-cyan/50">
                     #{idx + 1} - {item.timestamp}
                   </span>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="px-2 py-0.5 rounded-full border border-neon-cyan/20 text-[10px] uppercase tracking-[0.25em] text-neon-cyan/60 flex items-center gap-1">
+                      <Shield size={10} /> {item.mode}
+                    </span>
                     <button
                       onClick={() => copyToClipboard(item.plaintext)}
                       title="Copy plaintext"
@@ -95,6 +98,20 @@ export const HistoryPanel: React.FC = () => {
                     <div className="text-neon-cyan/60 mb-1">Ciphertext:</div>
                     <div className="p-2 bg-black/80 rounded border border-neon-cyan/10 text-neon-cyan/70 break-all font-mono max-h-16 overflow-y-auto">
                       {item.ciphertext}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div>
+                      <div className="text-neon-cyan/60 mb-1">Nonce:</div>
+                      <div className="p-2 bg-black/80 rounded border border-neon-cyan/10 text-white break-all font-mono max-h-16 overflow-y-auto">
+                        {item.nonce || 'Not stored'}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-neon-cyan/60 mb-1">Auth Tag:</div>
+                      <div className="p-2 bg-black/80 rounded border border-neon-cyan/10 text-white break-all font-mono max-h-16 overflow-y-auto">
+                        {item.tag || 'Not stored'}
+                      </div>
                     </div>
                   </div>
                 </div>

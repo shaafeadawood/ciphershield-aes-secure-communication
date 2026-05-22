@@ -19,6 +19,9 @@ export interface HistoryItem {
   plaintext: string;
   ciphertext: string;
   timestamp: string;
+  mode: 'AES-256-GCM' | 'Caesar';
+  nonce?: string;
+  tag?: string;
 }
 
 export interface LogEntry {

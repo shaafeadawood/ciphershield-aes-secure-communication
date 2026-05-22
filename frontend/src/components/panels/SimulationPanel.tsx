@@ -33,7 +33,7 @@ export const SimulationPanel: React.FC = () => {
       attack_status: 'INTERCEPTED',
       decryption_attempts: 0,
       max_attempts: Math.pow(2, 256), // 2^256 possible keys
-      estimated_crack_time: 'Universe lifetime ♾️',
+      estimated_crack_time: 'Universe lifetime',
     };
 
     setAttackData(simulatedAttack);
@@ -188,7 +188,7 @@ export const SimulationPanel: React.FC = () => {
 
       {/* Educational Notes */}
       <div className="glass-panel p-4 border-l-2 border-neon-green/50">
-        <h4 className="text-xs font-bold text-neon-green/80 mb-2 uppercase tracking-wider">💡 Security Lesson</h4>
+        <h4 className="text-xs font-bold text-neon-green/80 mb-2 uppercase tracking-wider">Security Lesson</h4>
         <p className="text-xs text-neon-cyan/60 leading-relaxed">
           Even if attackers intercept encrypted data, they cannot read it without the encryption key. 
           AES-256-GCM provides both confidentiality (encryption) and authentication (integrity verification).

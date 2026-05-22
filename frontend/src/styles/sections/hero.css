@@ -91,7 +91,14 @@
 
 .title-word {
   display: inline-block;
-  background: linear-gradient(90deg, #ffffff 0%, #00d9ff 25%, #0099ff 50%, #00d9ff 75%, #ffffff 100%);
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #00d9ff 25%,
+    #0099ff 50%,
+    #00d9ff 75%,
+    #ffffff 100%
+  );
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

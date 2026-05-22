@@ -17,6 +17,10 @@ function App() {
     document.documentElement.style.scrollBehavior = 'smooth';
   }, []);
 
+  const handleExploreClick = () => {
+    document.getElementById('encryption')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <motion.div className="app">
       {/* Navigation */}
@@ -30,7 +34,7 @@ function App() {
           transition={{ duration: 0.5 }}
         >
           {/* Hero Section */}
-          <Hero />
+          <Hero onExploreClick={handleExploreClick} />
 
           {/* Encryption Experience */}
           <EncryptionExperience />

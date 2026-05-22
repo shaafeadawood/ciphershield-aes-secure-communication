@@ -1,19 +1,18 @@
 /* Global Styles */
-@import './globals.css';
+@import "./globals.css";
 
 /* Components */
-@import './components/button.css';
-@import './components/card.css';
-@import './components/navbar.css';
+@import "./components/button.css";
+@import "./components/card.css";
+@import "./components/navbar.css";
 
 /* Sections */
-@import './sections/hero.css';
-@import './sections/encryption-experience.css';
-@import './sections/about.css';
-@import './sections/footer.css';
+@import "./sections/hero.css";
+@import "./sections/encryption-experience.css";
+@import "./sections/about.css";
+@import "./sections/footer.css";
 
 /* Tailwind Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
