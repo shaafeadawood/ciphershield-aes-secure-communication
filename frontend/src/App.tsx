@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/ui/Navbar';
 import { Hero } from './components/sections/Hero';
 import { EncryptionExperience } from './components/sections/EncryptionExperience';
+import SecureTransmissionSection from './sections/SecureTransmission';
 import { About } from './components/sections/About';
 import { Footer } from './components/sections/Footer';
 
@@ -38,6 +39,9 @@ function App() {
 
           {/* Encryption Experience */}
           <EncryptionExperience />
+
+          {/* Secure Transmission */}
+          <SecureTransmissionSection />
 
           {/* About Section */}
           <About />
