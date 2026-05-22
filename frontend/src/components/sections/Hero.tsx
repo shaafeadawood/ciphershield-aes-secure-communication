@@ -73,12 +73,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         initial="initial"
         animate="animate"
       >
-        <motion.div className="hero-badge" variants={staggerItem} transition={{ duration: 0.35, delay: 0.2 }}>
-          <div className="flex items-center gap-3">
-            <span style={{ flex: 1, height: 1, background: 'rgba(0, 217, 255, 0.2)' }} />
-            <span style={{ flex: 1, height: 1, background: 'rgba(0, 217, 255, 0.2)' }} />
-          </div>
-        </motion.div>
+        {/* hero-badge removed */}
 
         <motion.div className="hero-title-wrapper" variants={staggerItem} transition={{ duration: 0.45, delay: 0.4 }}>
           <h1 className="hero-title" style={{ fontSize: 'clamp(3rem, 7vw, 6rem)' }}>
