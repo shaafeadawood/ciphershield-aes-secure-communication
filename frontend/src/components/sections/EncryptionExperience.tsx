@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Activity, Binary, History, Layers, Lock, Radar, Shield, Terminal, Unlock } from 'lucide-react';
+import { Activity, BarChart2, Binary, History, Layers, Lock, Radar, Shield, Terminal, Unlock } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { CyberSpace } from '../visualization/CyberSpace';
@@ -8,6 +8,7 @@ import { EncryptPanel } from '../panels/EncryptPanel';
 import { DecryptPanel } from '../panels/DecryptPanel';
 import { HistoryPanel } from '../panels/HistoryPanel';
 import { SimulationPanel } from '../panels/SimulationPanel';
+import { StrengthAnalyzer } from '../../panels/StrengthAnalyzer';
 import { SystemLogs } from '../ui/SystemLogs';
 import { staggerContainer, staggerItem, scrollReveal } from '../animations/variants';
 import { useCipherStore } from '../../store/cipherStore';
@@ -18,6 +19,7 @@ const tabConfig = [
   { id: 'decrypt' as const, label: 'Decrypt', icon: Unlock },
   { id: 'history' as const, label: 'History', icon: History },
   { id: 'simulation' as const, label: 'Simulation', icon: Radar },
+  { id: 'analysis' as const, label: 'Analysis', icon: BarChart2 },
 ];
 
 export const EncryptionExperience: React.FC = () => {
@@ -37,6 +39,8 @@ export const EncryptionExperience: React.FC = () => {
     switch (currentTab) {
       case 'decrypt':
         return <DecryptPanel />;
+      case 'analysis':
+        return <StrengthAnalyzer />;
       case 'history':
         return <HistoryPanel />;
       case 'simulation':
