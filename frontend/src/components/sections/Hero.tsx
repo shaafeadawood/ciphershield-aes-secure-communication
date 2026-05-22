@@ -76,7 +76,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
         <motion.div className="hero-badge" variants={staggerItem} transition={{ duration: 0.35, delay: 0.2 }}>
           <div className="flex items-center gap-3">
             <span style={{ flex: 1, height: 1, background: 'rgba(0, 217, 255, 0.2)' }} />
-            <span className="badge-text" style={{ fontSize: '11px', letterSpacing: '0.25em' }}>MILITARY-GRADE ENCRYPTION PLATFORM</span>
             <span style={{ flex: 1, height: 1, background: 'rgba(0, 217, 255, 0.2)' }} />
           </div>
         </motion.div>

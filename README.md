@@ -1,86 +1,106 @@
 # CipherShield
 
-CipherShield is a cinematic cryptography workspace for AES-256-GCM encryption, decryption, live transmission visualization, and session auditing.
+CipherShield — Advanced Secure Communication & Encryption Visualization
 
-## Overview
+CipherShield is an educational and research‑oriented platform that demonstrates modern secure communication using AES authenticated encryption (AES‑GCM). It combines an interactive React frontend with a FastAPI backend to visualize encryption workflows, simulate interception and tampering attacks, and teach robust cryptographic practices.
 
-The app pairs a React + TypeScript frontend with a FastAPI backend. The frontend handles the interactive security dashboard, while the backend exposes typed encryption routes and serves the production build.
+This repository is intended for students, researchers, and instructors who want a hands‑on environment to study symmetric encryption, authenticated modes, and practical security tradeoffs.
 
-## Features
+## Key Focus
 
-- AES-256-GCM key generation, encryption, and decryption
-- Live secure transmission simulation with packet interception states
-- Encryption history with quick decrypt support and report export
-- System log console with color-coded operational messages
-- Backend health check and frontend service layer integration
+- Core cryptography: AES (128/192/256) with emphasis on AES‑256‑GCM (AEAD)
+- Secure transmission: nonce/IV discipline, authentication tags, and tamper detection
+- Attack simulation: passive interception (sniffing) and active tampering demonstrations
+- Pedagogy: comparisons with weak/classical ciphers, live logs, and step‑by‑step visualizations
 
-## Tech Stack
+## Architecture Overview
 
-- Frontend: React 18, TypeScript, Vite, Framer Motion, Zustand, Axios
-- Backend: FastAPI, Uvicorn, PyCryptodome
-- Styling: Custom CSS, glassmorphism panels, neon cyber palette
+- Frontend: React + TypeScript + Vite — interactive visualizations and controls
+- Backend: FastAPI (Python) — typed API routes for key generation, encryption, and decryption
+- Crypto: AES‑GCM implementations exposed via backend routes; frontend drives the visualization and demo flows
 
-## Ports
+The system intentionally separates the visualization layer from the crypto layer so students can observe both the protocol-level behavior and the underlying cryptographic primitives.
 
-- Frontend dev server: `http://localhost:5173`
-- Backend API server: `http://localhost:8000`
-- Production frontend is served by the FastAPI app from the built Vite output
+## Installation (Development)
 
-## API
+1. Create and activate a Python virtual environment, then install backend dependencies:
 
-| Method | Path                       | Description                                |
-| ------ | -------------------------- | ------------------------------------------ |
-| `GET`  | `/`                        | Serves the compiled frontend in production |
-| `GET`  | `/health`                  | Backend health probe                       |
-| `GET`  | `/api/health`              | Backend health probe used by the frontend  |
-| `POST` | `/api/cipher/generate-key` | Generates an AES-256 key                   |
-| `POST` | `/api/cipher/encrypt`      | Encrypts plaintext with AES-256-GCM        |
-| `POST` | `/api/cipher/decrypt`      | Decrypts AES-256-GCM payloads              |
-
-## Project Structure
-
-```text
-CipherShield/
-  backend/
-  frontend/
+```bash
+python -m venv .venv
+source .venv/Scripts/activate    # Windows (Git Bash) / adapt as needed
+pip install -r backend/requirements.txt
 ```
 
-Key frontend areas:
-
-- `frontend/src/components/sections/` for the landing experience and operations center
-- `frontend/src/components/panels/` for encrypt, decrypt, history, and analysis panels
-- `frontend/src/sections/SecureTransmission/` for the packet transmission demo
-- `frontend/src/services/cipherService.ts` for typed API calls
-- `frontend/src/store/cipherStore.ts` for session state
-
-## Setup
-
-1. Install backend dependencies with `pip install -r backend/requirements.txt`.
-2. Install frontend dependencies with `cd frontend && npm install`.
-3. Start the backend on port `8000`.
-4. Start the frontend on port `5173`.
-
-## Scripts
-
-Frontend:
+2. Install frontend dependencies and run the dev server:
 
 ```bash
 cd frontend
 npm install
 npm run dev
-npm run build
 ```
 
-Backend:
+3. Start the backend API (from project root):
 
 ```bash
-cd backend
-pip install -r requirements.txt
-uvicorn app:app --reload --port 8000
+uvicorn backend.app:app --reload --port 8000
 ```
 
-## Notes
+Frontend dev server defaults to `http://localhost:5173` and backend to `http://localhost:8000`.
 
-- The frontend calls the backend through `/api/*` routes during development.
-- `frontend/vite.config.ts` proxies API requests to `http://localhost:8000`.
-- The app uses local session storage for transient encryption history and logs.
+## Quick Usage
+
+- Use the UI to generate AES keys, encrypt messages, and visualize transmission across an insecure channel.
+- Toggle attack simulations to observe packet capture and tampering attempts.
+- Inspect live logs and message history to explore tag verification failures and replay scenarios.
+
+## Security‑Relevant Implementation Notes
+
+- AES Mode: the project uses AES‑GCM (AEAD) to demonstrate combined confidentiality and integrity. AES‑GCM requires unique nonces for each encryption under the same key — nonce reuse is insecure.
+- Key Length: AES‑256 is available for demonstrations of high security margins; AES‑128 and AES‑192 may be used for performance comparisons.
+- Key Generation: keys should be produced by a cryptographically secure RNG (CSPRNG). In production, use hardware key stores (HSM, cloud KMS) rather than application memory.
+- Authentication Tags: AES‑GCM produces an authentication tag that must be validated before any plaintext is used. On tag failure, the system rejects the payload.
+- Side Channels: the demo is not hardened against timing or cache side‑channel attacks. Real deployments require constant‑time implementations and hardware protections.
+
+## API Endpoints (Development)
+
+The backend exposes simple routes used by the frontend demo. Typical endpoints include:
+
+- `GET /api/health` — backend health check
+- `POST /api/cipher/generate-key` — returns a base64 key (demo only)
+- `POST /api/cipher/encrypt` — accepts plaintext, returns ciphertext + nonce + tag
+- `POST /api/cipher/decrypt` — accepts ciphertext + nonce + tag, returns plaintext (after tag verification)
+
+> Note: These endpoints are designed for educational purposes. Do not use the demo API directly for production secret management.
+
+## Educational Scenarios & Lab Ideas
+
+- Visualize nonce reuse and observe resultant plaintext leakage in CTR/GCM modes.
+- Simulate MITM tampering and show how authentication tags prevent silent modification.
+- Compare AES ciphertext with classical Caesar cipher output to teach frequency and structural leakage.
+- Demonstrate key compromise and how it enables decryption of captured traffic (highlight lack of forward secrecy for pure symmetric setups).
+
+## Limitations
+
+- Local demo: the application simulates transmission without using production networks or HSMs.
+- No integrated PKI: identity and authentic key exchange are out of scope for the demo and should be added for production/complete protocol simulations.
+- Not side‑channel hardened: implementations are demonstration‑grade, not FIPS‑level hardened.
+
+## Contribution & Development
+
+Contributions are welcome: open an issue describing the feature or bug, or submit a PR. Suggested improvements for security educators include adding:
+
+- Ephemeral key exchange (ECDH) + hybrid encryption flows
+- Certificate handling (PKI) and mutual TLS examples
+- KMS/HSM integration and envelope encryption demos
+- Automated test suites for cryptographic correctness and regression
+
+## License
+
+See the repository license (if present). This project is primarily educational — verify licensing before reuse in other projects.
+
+## Contact
+
+For questions about the demo, teaching materials, or cryptographic details, open an issue or contact the repository owner.
+
+---
+_Prepared for academic and instructional use — not intended as a production crypto stack._
