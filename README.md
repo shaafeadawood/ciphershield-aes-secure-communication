@@ -94,13 +94,7 @@ Contributions are welcome: open an issue describing the feature or bug, or submi
 - KMS/HSM integration and envelope encryption demos
 - Automated test suites for cryptographic correctness and regression
 
-## License
-
-See the repository license (if present). This project is primarily educational — verify licensing before reuse in other projects.
 
 ## Contact
 
 For questions about the demo, teaching materials, or cryptographic details, open an issue or contact the repository owner.
-
----
-_Prepared for academic and instructional use — not intended as a production crypto stack._
